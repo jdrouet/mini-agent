@@ -1,7 +1,9 @@
+use std::collections::HashMap;
+use std::path::Path;
+
 use tokio::task::JoinHandle;
 
 use crate::source::OuterSourceConfig;
-use std::{collections::HashMap, path::Path};
 
 pub enum Component {
     Source(crate::source::Source),

@@ -1,8 +1,7 @@
 use tokio::sync::mpsc;
 
-use crate::event::{Event, Metric};
-
 use super::prelude::{SinkConfig, BUFFER_SIZE};
+use crate::event::{Event, Metric};
 
 const BATCH_SIZE: usize = 50;
 

@@ -1,8 +1,9 @@
-use crate::{event::Event, prelude::Component};
 use sysinfo::{Pid, Process, SystemExt};
 use tokio::sync::mpsc;
 
 use super::prelude::SourceConfig;
+use crate::event::Event;
+use crate::prelude::Component;
 
 #[derive(Debug, serde::Deserialize)]
 pub struct SysinfoConfig {

@@ -1,8 +1,7 @@
 use tokio::sync::mpsc;
 
-use crate::event::Event;
-
 use super::prelude::{SinkConfig, BUFFER_SIZE};
+use crate::event::Event;
 
 #[derive(Debug, serde::Deserialize)]
 pub struct ConsoleConfig;

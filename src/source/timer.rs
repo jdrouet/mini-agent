@@ -1,7 +1,8 @@
-use crate::{event::Event, prelude::Component};
 use tokio::sync::mpsc;
 
 use super::prelude::SourceConfig;
+use crate::event::Event;
+use crate::prelude::Component;
 
 #[derive(Debug, serde::Deserialize)]
 pub struct TimerConfig {
