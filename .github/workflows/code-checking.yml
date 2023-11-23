@@ -1,0 +1,36 @@
+on: [push]
+
+env:
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  code-checking:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.ref }}-code-checking
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt,clippy
+
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-code-checking-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: run lint
+        run: cargo fmt --all --check
+
+      - name: run check
+        run: cargo check --all-features --tests --workspace
+
+      - name: run clippy
+        run: cargo clippy --all-targets --all-features --tests --workspace
