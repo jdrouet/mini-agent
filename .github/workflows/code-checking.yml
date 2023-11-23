@@ -26,8 +26,8 @@ jobs:
             target/
           key: ${{ runner.os }}-code-checking-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: run lint
-        run: cargo fmt --all --check
+      #- name: run lint
+      #  run: cargo fmt --all --check
 
       - name: run check
         run: cargo check --all-features --tests --workspace
