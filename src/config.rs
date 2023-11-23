@@ -1,7 +1,7 @@
 use tokio::task::JoinHandle;
 
 use crate::source::OuterSourceConfig;
-use std::collections::HashMap;
+use std::{collections::HashMap, path::Path};
 
 pub enum Component {
     Source(crate::source::Source),
@@ -24,7 +24,7 @@ pub(crate) struct Config {
 }
 
 impl Config {
-    pub fn from_file(path: &str) -> Self {
+    pub fn from_file(path: &Path) -> Self {
         let config = std::fs::read_to_string(path).unwrap();
         toml::from_str(&config).unwrap()
     }

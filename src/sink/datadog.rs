@@ -2,7 +2,7 @@ use tokio::sync::mpsc;
 
 use crate::event::{Event, Metric};
 
-use super::prelude::SinkConfig;
+use super::prelude::{SinkConfig, BUFFER_SIZE};
 
 const BATCH_SIZE: usize = 50;
 
@@ -30,7 +30,7 @@ pub struct DatadogConfig {
 
 impl SinkConfig for DatadogConfig {
     fn build(self) -> (super::Sink, mpsc::Sender<crate::event::Event>) {
-        let (sender, receiver) = mpsc::channel(100);
+        let (sender, receiver) = mpsc::channel(BUFFER_SIZE);
 
         use reqwest::header;
         let mut headers = header::HeaderMap::new();
