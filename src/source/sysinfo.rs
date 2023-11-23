@@ -81,10 +81,22 @@ impl Sysinfo {
 
     async fn handle_memory(&self) {
         futures::join!(
-            self.push(crate::event::Metric::now("system.memory.total", self.system.total_memory() as f64)),
-            self.push(crate::event::Metric::now("system.memory.used", self.system.used_memory() as f64)),
-            self.push(crate::event::Metric::now("system.swap.total", self.system.total_swap() as f64)),
-            self.push(crate::event::Metric::now("system.swap.used", self.system.used_swap() as f64)),
+            self.push(crate::event::Metric::now(
+                "system.memory.total",
+                self.system.total_memory() as f64
+            )),
+            self.push(crate::event::Metric::now(
+                "system.memory.used",
+                self.system.used_memory() as f64
+            )),
+            self.push(crate::event::Metric::now(
+                "system.swap.total",
+                self.system.total_swap() as f64
+            )),
+            self.push(crate::event::Metric::now(
+                "system.swap.used",
+                self.system.used_swap() as f64
+            )),
         );
     }
 
