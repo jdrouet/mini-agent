@@ -548,6 +548,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6877bb514081ee2a7ff5ef9de3281f14a4dd4bceac4c09388074a6b5df8a139a"
 
 [[package]]
+name = "mini-agent"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "futures",
+ "reqwest",
+ "serde",
+ "sysinfo",
+ "tokio",
+ "toml",
+]
+
+[[package]]
 name = "miniz_oxide"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1065,19 +1078,6 @@ name = "utf8parse"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "711b9620af191e0cdc7468a8d14e709c3dcdb115b36f838e601583af800a370a"
-
-[[package]]
-name = "victor"
-version = "0.1.0"
-dependencies = [
- "clap",
- "futures",
- "reqwest",
- "serde",
- "sysinfo",
- "tokio",
- "toml",
-]
 
 [[package]]
 name = "want"

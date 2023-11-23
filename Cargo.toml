@@ -1,5 +1,5 @@
 [package]
-name = "victor"
+name = "mini-agent"
 version = "0.1.0"
 edition = "2021"
 
