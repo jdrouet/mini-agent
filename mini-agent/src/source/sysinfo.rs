@@ -1,8 +1,8 @@
+use mini_agent_core::event::{Event, Metric};
 use sysinfo::{Pid, Process, SystemExt};
 use tokio::sync::mpsc;
 
 use super::prelude::SourceConfig;
-use crate::event::Event;
 use crate::prelude::Component;
 
 #[derive(Debug, serde::Deserialize)]
@@ -35,7 +35,7 @@ pub struct Sysinfo {
 }
 
 impl Sysinfo {
-    async fn push(&self, metric: crate::event::Metric) {
+    async fn push(&self, metric: Metric) {
         let event = metric
             .with_optional_tag("host", self.system.host_name())
             .into();
@@ -50,11 +50,8 @@ impl Sysinfo {
         for comp in self.system.components() {
             let name = comp.label().to_owned();
             self.push(
-                crate::event::Metric::now(
-                    "system.component.temperature",
-                    comp.temperature() as f64,
-                )
-                .with_tag("name", name.clone()),
+                Metric::now("system.component.temperature", comp.temperature() as f64)
+                    .with_tag("name", name.clone()),
             )
             .await;
         }
@@ -63,16 +60,16 @@ impl Sysinfo {
     async fn handle_cpu(&self) {
         use sysinfo::CpuExt;
 
-        self.push(crate::event::Metric::now("system.cpu.count", self.system.cpus().len() as f64))
+        self.push(Metric::now("system.cpu.count", self.system.cpus().len() as f64))
             .await;
         for cpu in self.system.cpus() {
             self.push(
-                crate::event::Metric::now("system.cpu.usage", cpu.cpu_usage() as f64)
+                Metric::now("system.cpu.usage", cpu.cpu_usage() as f64)
                     .with_tag("name", cpu.name().to_string()),
             )
             .await;
             self.push(
-                crate::event::Metric::now("system.cpu.frequency", cpu.frequency() as f64)
+                Metric::now("system.cpu.frequency", cpu.frequency() as f64)
                     .with_tag("name", cpu.name().to_string()),
             )
             .await;
@@ -81,22 +78,10 @@ impl Sysinfo {
 
     async fn handle_memory(&self) {
         futures::join!(
-            self.push(crate::event::Metric::now(
-                "system.memory.total",
-                self.system.total_memory() as f64
-            )),
-            self.push(crate::event::Metric::now(
-                "system.memory.used",
-                self.system.used_memory() as f64
-            )),
-            self.push(crate::event::Metric::now(
-                "system.swap.total",
-                self.system.total_swap() as f64
-            )),
-            self.push(crate::event::Metric::now(
-                "system.swap.used",
-                self.system.used_swap() as f64
-            )),
+            self.push(Metric::now("system.memory.total", self.system.total_memory() as f64)),
+            self.push(Metric::now("system.memory.used", self.system.used_memory() as f64)),
+            self.push(Metric::now("system.swap.total", self.system.total_swap() as f64)),
+            self.push(Metric::now("system.swap.used", self.system.used_swap() as f64)),
         );
     }
 
@@ -112,18 +97,14 @@ impl Sysinfo {
 
         futures::join!(
             self.push(
-                crate::event::Metric::now("process.memory", process.memory() as f64)
+                Metric::now("process.memory", process.memory() as f64).with_tags(tags.clone())
+            ),
+            self.push(
+                Metric::now("process.virtual_memory", process.virtual_memory() as f64)
                     .with_tags(tags.clone())
             ),
             self.push(
-                crate::event::Metric::now(
-                    "process.virtual_memory",
-                    process.virtual_memory() as f64
-                )
-                .with_tags(tags.clone())
-            ),
-            self.push(
-                crate::event::Metric::now("process.cpu_usage", process.cpu_usage() as f64)
+                Metric::now("process.cpu_usage", process.cpu_usage() as f64)
                     .with_tags(tags.clone())
             ),
         );

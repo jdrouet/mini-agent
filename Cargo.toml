@@ -1,3 +1,3 @@
 [workspace]
-members = ["./mini-agent"]
+members = ["./mini-agent", "./mini-agent-core"]
 resolver = "2"

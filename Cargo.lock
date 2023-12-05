@@ -661,12 +661,17 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "futures",
+ "mini-agent-core",
  "reqwest",
  "serde",
  "sysinfo",
  "tokio",
  "toml",
 ]
+
+[[package]]
+name = "mini-agent-core"
+version = "0.1.0"
 
 [[package]]
 name = "miniz_oxide"

@@ -1,7 +1,7 @@
+use mini_agent_core::event::{Event, Metric};
 use tokio::sync::mpsc;
 
 use super::prelude::SourceConfig;
-use crate::event::Event;
 use crate::prelude::Component;
 
 #[derive(Debug, serde::Deserialize)]
@@ -27,7 +27,7 @@ impl Component for Timer {
     async fn run(mut self) {
         loop {
             let _ = self.interval.tick().await;
-            let event = crate::event::Metric::now("tick", 0.0);
+            let event = Metric::now("tick", 0.0);
             if let Err(err) = self.output.send(event.into()).await {
                 eprintln!("unable to send event: {err:?}");
             }

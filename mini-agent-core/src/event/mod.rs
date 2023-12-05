@@ -1,11 +1,7 @@
 use std::borrow::Cow;
 use std::collections::BTreeMap;
 
-pub type Timestamp = std::time::SystemTime;
-
-fn now() -> Timestamp {
-    std::time::SystemTime::now()
-}
+use crate::time::{now, Timestamp};
 
 #[derive(Clone, Debug)]
 pub enum Event {

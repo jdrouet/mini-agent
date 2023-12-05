@@ -1,7 +1,7 @@
+use mini_agent_core::event::{Event, Metric};
 use tokio::sync::mpsc;
 
 use super::prelude::{SinkConfig, BUFFER_SIZE};
-use crate::event::{Event, Metric};
 
 const BATCH_SIZE: usize = 50;
 
@@ -28,7 +28,7 @@ pub struct DatadogConfig {
 }
 
 impl SinkConfig for DatadogConfig {
-    fn build(self) -> (super::Sink, mpsc::Sender<crate::event::Event>) {
+    fn build(self) -> (super::Sink, mpsc::Sender<mini_agent_core::event::Event>) {
         let (sender, receiver) = mpsc::channel(BUFFER_SIZE);
 
         use reqwest::header;

@@ -31,7 +31,7 @@ pub(crate) enum SourceConfig {
 }
 
 impl prelude::SourceConfig for SourceConfig {
-    fn build(self, sender: tokio::sync::mpsc::Sender<crate::event::Event>) -> Source {
+    fn build(self, sender: tokio::sync::mpsc::Sender<mini_agent_core::event::Event>) -> Source {
         match self {
             Self::Sysinfo(inner) => inner.build(sender),
             Self::Timer(inner) => inner.build(sender),

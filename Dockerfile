@@ -8,6 +8,8 @@ COPY Cargo.toml /code/Cargo.toml
 COPY Cargo.lock /code/Cargo.lock
 RUN cargo init --bin --name mini-agent mini-agent
 COPY mini-agent/Cargo.toml /code/mini-agent/Cargo.toml
+RUN cargo init --lib --name mini-agent-core mini-agent-core
+COPY mini-agent-core/Cargo.toml /code/mini-agent-core/Cargo.toml
 
 # https://docs.docker.com/engine/reference/builder/#run---mounttypecache
 RUN --mount=type=cache,target=$CARGO_HOME/git,sharing=locked \
@@ -28,6 +30,8 @@ COPY Cargo.toml /code/Cargo.toml
 COPY Cargo.lock /code/Cargo.lock
 COPY mini-agent/Cargo.toml /code/mini-agent/Cargo.toml
 COPY mini-agent/src /code/mini-agent/src
+COPY mini-agent-core/Cargo.toml /code/mini-agent-core/Cargo.toml
+COPY mini-agent-core/src /code/mini-agent-core/src
 COPY --from=vendor /code/.cargo /code/.cargo
 COPY --from=vendor /code/vendor /code/vendor
 

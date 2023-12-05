@@ -1,5 +1,4 @@
 pub(crate) mod config;
-pub(crate) mod event;
 pub(crate) mod prelude;
 pub(crate) mod sink;
 pub(crate) mod source;

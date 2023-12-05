@@ -1,6 +1,5 @@
+use mini_agent_core::event::Event;
 use tokio::sync::mpsc;
-
-use crate::event::Event;
 
 pub const BUFFER_SIZE: usize = 100;
 

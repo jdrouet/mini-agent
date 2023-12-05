@@ -25,7 +25,12 @@ pub(crate) enum SinkConfig {
 }
 
 impl prelude::SinkConfig for SinkConfig {
-    fn build(self) -> (Sink, tokio::sync::mpsc::Sender<crate::event::Event>) {
+    fn build(
+        self,
+    ) -> (
+        Sink,
+        tokio::sync::mpsc::Sender<mini_agent_core::event::Event>,
+    ) {
         match self {
             Self::Console(inner) => inner.build(),
             Self::Datadog(inner) => inner.build(),

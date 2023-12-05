@@ -1,13 +1,13 @@
+use mini_agent_core::event::Event;
 use tokio::sync::mpsc;
 
 use super::prelude::{SinkConfig, BUFFER_SIZE};
-use crate::event::Event;
 
 #[derive(Debug, serde::Deserialize)]
 pub struct ConsoleConfig;
 
 impl SinkConfig for ConsoleConfig {
-    fn build(self) -> (super::Sink, mpsc::Sender<crate::event::Event>) {
+    fn build(self) -> (super::Sink, mpsc::Sender<mini_agent_core::event::Event>) {
         let (sender, receiver) = mpsc::channel(BUFFER_SIZE);
 
         (super::Sink::Console(Console { receiver }), sender)
