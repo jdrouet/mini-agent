@@ -675,12 +675,20 @@ name = "mini-agent-core"
 version = "0.1.0"
 
 [[package]]
+name = "mini-agent-sink-prelude"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "serde",
+ "tokio",
+]
+
+[[package]]
 name = "mini-agent-source-prelude"
 version = "0.1.0"
 dependencies = [
  "mini-agent-core",
  "serde",
- "sysinfo",
  "tokio",
 ]
 

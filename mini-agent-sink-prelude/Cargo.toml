@@ -1,5 +1,5 @@
 [package]
-name = "mini-agent-source-prelude"
+name = "mini-agent-sink-prelude"
 version = "0.1.0"
 edition = "2021"
 
