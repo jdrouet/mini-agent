@@ -130,7 +130,7 @@ impl Datadog {
     }
 }
 
-impl crate::prelude::Component for Datadog {
+impl mini_agent_core::prelude::Component for Datadog {
     async fn run(mut self) {
         let mut buffer = Vec::with_capacity(BATCH_SIZE);
         loop {

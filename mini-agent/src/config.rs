@@ -10,7 +10,7 @@ pub enum Component {
     Sink(crate::sink::Sink),
 }
 
-impl crate::prelude::Component for Component {
+impl mini_agent_core::prelude::Component for Component {
     async fn run(self) {
         match self {
             Self::Source(inner) => inner.run().await,
@@ -60,7 +60,7 @@ impl Config {
     }
 
     pub fn build(self) -> HashMap<String, JoinHandle<()>> {
-        use crate::prelude::Component;
+        use mini_agent_core::prelude::Component;
 
         self.components()
             .into_iter()

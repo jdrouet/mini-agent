@@ -18,7 +18,7 @@ pub struct Console {
     receiver: mpsc::Receiver<Event>,
 }
 
-impl crate::prelude::Component for Console {
+impl mini_agent_core::prelude::Component for Console {
     async fn run(mut self) {
         while let Some(received) = self.receiver.recv().await {
             println!("event: {received:?}");

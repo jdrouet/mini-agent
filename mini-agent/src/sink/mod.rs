@@ -8,7 +8,7 @@ pub(crate) enum Sink {
     Datadog(datadog::Datadog),
 }
 
-impl crate::prelude::Component for Sink {
+impl mini_agent_core::prelude::Component for Sink {
     async fn run(self) {
         match self {
             Self::Console(inner) => inner.run().await,

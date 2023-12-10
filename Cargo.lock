@@ -662,6 +662,7 @@ dependencies = [
  "clap",
  "futures",
  "mini-agent-core",
+ "mini-agent-source-prelude",
  "reqwest",
  "serde",
  "sysinfo",
@@ -672,6 +673,16 @@ dependencies = [
 [[package]]
 name = "mini-agent-core"
 version = "0.1.0"
+
+[[package]]
+name = "mini-agent-source-prelude"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "serde",
+ "sysinfo",
+ "tokio",
+]
 
 [[package]]
 name = "miniz_oxide"

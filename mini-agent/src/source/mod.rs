@@ -8,7 +8,7 @@ pub enum Source {
     Timer(timer::Timer),
 }
 
-impl crate::prelude::Component for Source {
+impl mini_agent_core::prelude::Component for Source {
     async fn run(self) {
         match self {
             Self::Sysinfo(inner) => inner.run().await,

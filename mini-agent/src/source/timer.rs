@@ -1,8 +1,8 @@
 use mini_agent_core::event::{Event, Metric};
+use mini_agent_source_prelude::timer;
 use tokio::sync::mpsc;
 
 use super::prelude::SourceConfig;
-use crate::prelude::Component;
 
 #[derive(Debug, serde::Deserialize)]
 pub struct TimerConfig {
@@ -14,23 +14,22 @@ impl SourceConfig for TimerConfig {
         super::Source::Timer(Timer {
             interval: tokio::time::interval(tokio::time::Duration::from_secs_f64(self.interval)),
             output,
+            executor: TimerExecutor,
         })
     }
 }
 
-pub struct Timer {
-    interval: tokio::time::Interval,
-    output: mpsc::Sender<Event>,
-}
+pub type Timer = timer::Timer<TimerExecutor>;
 
-impl Component for Timer {
-    async fn run(mut self) {
-        loop {
-            let _ = self.interval.tick().await;
-            let event = Metric::now("tick", 0.0);
-            if let Err(err) = self.output.send(event.into()).await {
-                eprintln!("unable to send event: {err:?}");
-            }
+pub struct TimerExecutor;
+
+impl timer::Executor for TimerExecutor {
+    async fn execute(&mut self, output: mpsc::Sender<Event>) {
+        if let Err(err) = output
+            .send(Event::Metric(Metric::now("instant", 0.0)))
+            .await
+        {
+            eprintln!("unable to send event: {err:?}");
         }
     }
 }
