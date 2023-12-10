@@ -1,6 +1,7 @@
 #![allow(async_fn_in_trait)]
 
 use mini_agent_core::event::Event;
+use mini_agent_core::prelude::Component;
 use tokio::sync::mpsc;
 
 pub const BUFFER_SIZE: usize = 100;
@@ -15,8 +16,8 @@ pub struct SinkBatch<E> {
     pub batch_size: usize,
 }
 
-impl<E: Executor> SinkBatch<E> {
-    pub async fn run(mut self) {
+impl<E: Executor> Component for SinkBatch<E> {
+    async fn run(mut self) {
         let mut buffer = Vec::with_capacity(self.batch_size);
         loop {
             let _count = self.receiver.recv_many(&mut buffer, self.batch_size).await;
