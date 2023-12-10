@@ -1,9 +1,8 @@
 use mini_agent_core::event::{Event, Metric};
+use mini_agent_sink_prelude::{Executor, SinkBatch};
 use tokio::sync::mpsc;
 
 use super::prelude::{SinkConfig, BUFFER_SIZE};
-
-const BATCH_SIZE: usize = 50;
 
 #[derive(Debug, serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -47,13 +46,16 @@ impl SinkConfig for DatadogConfig {
         );
 
         (
-            super::Sink::Datadog(Datadog {
+            super::Sink::Datadog(SinkBatch {
                 receiver,
-                metrics_url: format!("{}/api/v2/series", self.region.base_url()),
-                client: reqwest::ClientBuilder::new()
-                    .default_headers(headers)
-                    .build()
-                    .unwrap(),
+                batch_size: 10,
+                executor: DatadogExecutor {
+                    metrics_url: format!("{}/api/v2/series", self.region.base_url()),
+                    client: reqwest::ClientBuilder::new()
+                        .default_headers(headers)
+                        .build()
+                        .unwrap(),
+                },
             }),
             sender,
         )
@@ -103,13 +105,14 @@ impl From<Metric> for DatadogMetricSerie {
     }
 }
 
-pub struct Datadog {
-    receiver: mpsc::Receiver<Event>,
+pub type Datadog = SinkBatch<DatadogExecutor>;
+
+pub struct DatadogExecutor {
     client: reqwest::Client,
     metrics_url: String,
 }
 
-impl Datadog {
+impl DatadogExecutor {
     async fn push_metrics(&self, metrics: Vec<Metric>) {
         let payload = DatadogMetricPayload {
             series: metrics.into_iter().map(DatadogMetricSerie::from).collect(),
@@ -130,21 +133,16 @@ impl Datadog {
     }
 }
 
-impl mini_agent_core::prelude::Component for Datadog {
-    async fn run(mut self) {
-        let mut buffer = Vec::with_capacity(BATCH_SIZE);
-        loop {
-            let _ = self.receiver.recv_many(&mut buffer, BATCH_SIZE).await;
+impl Executor for DatadogExecutor {
+    async fn execute(&mut self, mut inputs: Vec<Event>) {
+        let mut metrics = Vec::with_capacity(inputs.len());
 
-            let mut metrics = Vec::with_capacity(BATCH_SIZE);
-
-            while let Some(event) = buffer.pop() {
-                match event {
-                    Event::Metric(inner) => metrics.push(inner),
-                }
+        while let Some(event) = inputs.pop() {
+            match event {
+                Event::Metric(inner) => metrics.push(inner),
             }
-
-            self.push_metrics(metrics).await;
         }
+
+        self.push_metrics(metrics).await;
     }
 }

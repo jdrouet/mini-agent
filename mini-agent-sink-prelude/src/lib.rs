@@ -7,7 +7,7 @@ use tokio::sync::mpsc;
 pub const BUFFER_SIZE: usize = 100;
 
 pub trait Executor {
-    async fn execute(&mut self, inputs: &[Event]);
+    async fn execute(&mut self, inputs: Vec<Event>);
 }
 
 pub struct SinkBatch<E> {
@@ -18,10 +18,10 @@ pub struct SinkBatch<E> {
 
 impl<E: Executor> Component for SinkBatch<E> {
     async fn run(mut self) {
-        let mut buffer = Vec::with_capacity(self.batch_size);
         loop {
+            let mut buffer = Vec::with_capacity(self.batch_size);
             let _count = self.receiver.recv_many(&mut buffer, self.batch_size).await;
-            self.executor.execute(&buffer).await;
+            self.executor.execute(buffer).await;
         }
     }
 }

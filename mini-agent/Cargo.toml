@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 mini-agent-core = { version = "*", path = "../mini-agent-core" }
+mini-agent-sink-prelude = { version = "*", path = "../mini-agent-sink-prelude" }
 mini-agent-source-prelude = { version = "*", path = "../mini-agent-source-prelude" }
 
 clap = { version = "4.4", features = ["derive"] }

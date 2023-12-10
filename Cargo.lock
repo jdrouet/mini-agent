@@ -662,6 +662,7 @@ dependencies = [
  "clap",
  "futures",
  "mini-agent-core",
+ "mini-agent-sink-prelude",
  "mini-agent-source-prelude",
  "reqwest",
  "serde",
