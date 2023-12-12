@@ -4,6 +4,8 @@ use mini_agent_core::event::Event;
 use mini_agent_core::prelude::Component;
 use tokio::sync::mpsc;
 
+use crate::prelude::Source;
+
 pub trait Executor {
     async fn execute(&mut self, output: mpsc::Sender<Event>);
 }
@@ -24,3 +26,5 @@ impl<E: Executor> Component for Timer<E> {
         }
     }
 }
+
+impl<E: Executor> Source for Timer<E> {}

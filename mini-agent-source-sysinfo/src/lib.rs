@@ -4,22 +4,22 @@ use mini_agent_source_prelude::timer::Executor;
 use sysinfo::{Pid, Process, SystemExt};
 use tokio::sync::mpsc;
 
-use super::prelude::SourceConfig;
-
 #[derive(Debug, serde::Deserialize)]
 pub struct SysinfoConfig {
     pub interval: f64,
 }
 
-impl SourceConfig for SysinfoConfig {
-    fn build(self, output: mpsc::Sender<Event>) -> super::Source {
-        super::Source::Sysinfo(Sysinfo {
+impl mini_agent_source_prelude::prelude::SourceConfig for SysinfoConfig {
+    type Output = Sysinfo;
+
+    fn build(self, output: mpsc::Sender<Event>) -> Self::Output {
+        Sysinfo {
             interval: tokio::time::interval(tokio::time::Duration::from_secs_f64(self.interval)),
             output,
             executor: SysinfoExecutor {
                 system: sysinfo::System::new_all(),
             },
-        })
+        }
     }
 }
 

@@ -14,6 +14,10 @@ RUN cargo init --lib --name mini-agent-sink-prelude mini-agent-sink-prelude
 COPY mini-agent-sink-prelude/Cargo.toml /code/mini-agent-sink-prelude/Cargo.toml
 RUN cargo init --lib --name mini-agent-source-prelude mini-agent-source-prelude
 COPY mini-agent-source-prelude/Cargo.toml /code/mini-agent-source-prelude/Cargo.toml
+RUN cargo init --lib --name mini-agent-source-sysinfo mini-agent-source-sysinfo
+COPY mini-agent-source-sysinfo/Cargo.toml /code/mini-agent-source-sysinfo/Cargo.toml
+RUN cargo init --lib --name mini-agent-source-timer mini-agent-source-timer
+COPY mini-agent-source-timer/Cargo.toml /code/mini-agent-source-timer/Cargo.toml
 
 # https://docs.docker.com/engine/reference/builder/#run---mounttypecache
 RUN --mount=type=cache,target=$CARGO_HOME/git,sharing=locked \
@@ -40,6 +44,10 @@ COPY mini-agent-sink-prelude/Cargo.toml /code/mini-agent-sink-prelude/Cargo.toml
 COPY mini-agent-sink-prelude/src /code/mini-agent-sink-prelude/src
 COPY mini-agent-source-prelude/Cargo.toml /code/mini-agent-source-prelude/Cargo.toml
 COPY mini-agent-source-prelude/src /code/mini-agent-source-prelude/src
+COPY mini-agent-source-sysinfo/Cargo.toml /code/mini-agent-source-sysinfo/Cargo.toml
+COPY mini-agent-source-sysinfo/src /code/mini-agent-source-sysinfo/src
+COPY mini-agent-source-timer/Cargo.toml /code/mini-agent-source-timer/Cargo.toml
+COPY mini-agent-source-timer/src /code/mini-agent-source-timer/src
 COPY --from=vendor /code/.cargo /code/.cargo
 COPY --from=vendor /code/vendor /code/vendor
 
@@ -80,6 +88,12 @@ COPY mini-agent-sink-prelude/src /code/mini-agent-sink-prelude/src
 
 COPY mini-agent-source-prelude/Cargo.toml /code/mini-agent-source-prelude/Cargo.toml
 COPY mini-agent-source-prelude/src /code/mini-agent-source-prelude/src
+
+COPY mini-agent-source-sysinfo/Cargo.toml /code/mini-agent-source-sysinfo/Cargo.toml
+COPY mini-agent-source-sysinfo/src /code/mini-agent-source-sysinfo/src
+
+COPY mini-agent-source-timer/Cargo.toml /code/mini-agent-source-timer/Cargo.toml
+COPY mini-agent-source-timer/src /code/mini-agent-source-timer/src
 
 COPY --from=vendor /code/.cargo /code/.cargo
 COPY --from=vendor /code/vendor /code/vendor

@@ -48,7 +48,7 @@ impl Config {
         }
 
         for (key, value) in sources.into_iter() {
-            use crate::source::prelude::SourceConfig;
+            use mini_agent_source_prelude::prelude::SourceConfig;
 
             let sender = targets.remove(&value.target).unwrap();
             let runner = value.inner.build(sender);

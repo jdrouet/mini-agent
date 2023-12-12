@@ -1,8 +1,7 @@
 use mini_agent_core::event::{Event, Metric};
+use mini_agent_source_prelude::prelude::SourceConfig;
 use mini_agent_source_prelude::timer;
 use tokio::sync::mpsc;
-
-use super::prelude::SourceConfig;
 
 #[derive(Debug, serde::Deserialize)]
 pub struct TimerConfig {
@@ -10,12 +9,14 @@ pub struct TimerConfig {
 }
 
 impl SourceConfig for TimerConfig {
-    fn build(self, output: mpsc::Sender<Event>) -> super::Source {
-        super::Source::Timer(Timer {
+    type Output = Timer;
+
+    fn build(self, output: mpsc::Sender<Event>) -> Self::Output {
+        Timer {
             interval: tokio::time::interval(tokio::time::Duration::from_secs_f64(self.interval)),
             output,
             executor: TimerExecutor,
-        })
+        }
     }
 }
 

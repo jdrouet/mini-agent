@@ -660,13 +660,13 @@ name = "mini-agent"
 version = "0.1.0"
 dependencies = [
  "clap",
- "futures",
  "mini-agent-core",
  "mini-agent-sink-prelude",
  "mini-agent-source-prelude",
+ "mini-agent-source-sysinfo",
+ "mini-agent-source-timer",
  "reqwest",
  "serde",
- "sysinfo",
  "tokio",
  "toml",
 ]
@@ -689,6 +689,28 @@ name = "mini-agent-source-prelude"
 version = "0.1.0"
 dependencies = [
  "mini-agent-core",
+ "serde",
+ "tokio",
+]
+
+[[package]]
+name = "mini-agent-source-sysinfo"
+version = "0.1.0"
+dependencies = [
+ "futures",
+ "mini-agent-core",
+ "mini-agent-source-prelude",
+ "serde",
+ "sysinfo",
+ "tokio",
+]
+
+[[package]]
+name = "mini-agent-source-timer"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "mini-agent-source-prelude",
  "serde",
  "tokio",
 ]

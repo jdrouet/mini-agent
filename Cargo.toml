@@ -4,5 +4,7 @@ members = [
     "./mini-agent-core",
     "./mini-agent-sink-prelude",
     "./mini-agent-source-prelude",
+    "./mini-agent-source-sysinfo",
+    "./mini-agent-source-timer",
 ]
 resolver = "2"

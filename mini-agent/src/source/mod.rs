@@ -1,11 +1,9 @@
-pub(crate) mod sysinfo;
-pub(crate) mod timer;
-
-pub(crate) mod prelude;
+use mini_agent_core::event::Event;
+use tokio::sync::mpsc::Sender;
 
 pub enum Source {
-    Sysinfo(sysinfo::Sysinfo),
-    Timer(timer::Timer),
+    Sysinfo(mini_agent_source_sysinfo::Sysinfo),
+    Timer(mini_agent_source_timer::Timer),
 }
 
 impl mini_agent_core::prelude::Component for Source {
@@ -17,24 +15,34 @@ impl mini_agent_core::prelude::Component for Source {
     }
 }
 
-impl From<timer::Timer> for Source {
-    fn from(value: timer::Timer) -> Self {
+impl mini_agent_source_prelude::prelude::Source for Source {}
+
+impl From<mini_agent_source_timer::Timer> for Source {
+    fn from(value: mini_agent_source_timer::Timer) -> Self {
         Self::Timer(value)
+    }
+}
+
+impl From<mini_agent_source_sysinfo::Sysinfo> for Source {
+    fn from(value: mini_agent_source_sysinfo::Sysinfo) -> Self {
+        Self::Sysinfo(value)
     }
 }
 
 #[derive(Debug, serde::Deserialize)]
 #[serde(rename_all = "kebab-case", tag = "type")]
 pub(crate) enum SourceConfig {
-    Sysinfo(sysinfo::SysinfoConfig),
-    Timer(timer::TimerConfig),
+    Sysinfo(mini_agent_source_sysinfo::SysinfoConfig),
+    Timer(mini_agent_source_timer::TimerConfig),
 }
 
-impl prelude::SourceConfig for SourceConfig {
-    fn build(self, sender: tokio::sync::mpsc::Sender<mini_agent_core::event::Event>) -> Source {
+impl mini_agent_source_prelude::prelude::SourceConfig for SourceConfig {
+    type Output = Source;
+
+    fn build(self, sender: Sender<Event>) -> Source {
         match self {
-            Self::Sysinfo(inner) => inner.build(sender),
-            Self::Timer(inner) => inner.build(sender),
+            Self::Sysinfo(inner) => Source::Sysinfo(inner.build(sender)),
+            Self::Timer(inner) => Source::Timer(inner.build(sender)),
         }
     }
 }
