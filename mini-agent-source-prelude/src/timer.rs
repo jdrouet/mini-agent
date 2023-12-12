@@ -19,8 +19,8 @@ impl<E> Timer<E> {}
 impl<E: Executor> Component for Timer<E> {
     async fn run(mut self) {
         loop {
-            self.executor.execute(self.output.clone()).await;
             let _ = self.interval.tick().await;
+            self.executor.execute(self.output.clone()).await;
         }
     }
 }

@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+# Add mini-agent:mini-agent user & group
+id --user mini-agent >/dev/null 2>&1 || \
+  useradd --system --shell /sbin/nologin --home-dir /var/lib/mini-agent --user-group \
+    --comment "mini-agent observability data router" mini-agent
+
+# Create default mini-agent data directory
+mkdir -p /var/lib/mini-agent
+
+# Make mini-agent:mini-agent the owner of the mini-agent data directory
+chown -R mini-agent:mini-agent /var/lib/mini-agent
+
+#DEBHELPER#

@@ -1,0 +1,7 @@
+[sources.timer]
+type = "timer"
+target = "console"
+interval = 10
+
+[sinks.console]
+type = "console"

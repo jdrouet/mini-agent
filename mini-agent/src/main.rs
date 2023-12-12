@@ -10,8 +10,8 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Name of the person to greet
-    #[arg(short, long)]
+    /// Path to the configuration file
+    #[arg(short, long, default_value = "/etc/mini-agent/config.toml")]
     config: PathBuf,
 }
 

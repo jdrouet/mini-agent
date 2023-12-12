@@ -1,7 +1,51 @@
 [package]
 name = "mini-agent"
+description = "A simple agent that takes metrics from one place to another."
+readme = "readme.md"
 version = "0.1.0"
 edition = "2021"
+
+[package.metadata.deb]
+maintainer = "Jeremie Drouet <jeremie.drouet@gmail.com>"
+copyright = "2017, Jeremie Drouet <jeremie.drouet@gmail.com>"
+license-file = ["LICENSE", "4"]
+extended-description = "A simple agent that takes metrics from one place to another."
+depends = "$auto"
+section = "utility"
+priority = "optional"
+maintainer-scripts = "assets/scripts/"
+assets = [
+    [
+        "assets/config.toml",
+        "etc/mini-agent/config.toml",
+        "644",
+    ],
+    [
+        "target/release/mini-agent",
+        "usr/bin/",
+        "755",
+    ],
+    [
+        "assets/systemd/mini-agent.service",
+        "/lib/systemd/system/mini-agent.service",
+        "644",
+    ],
+    [
+        "assets/systemd/mini-agent.default",
+        "/etc/default/mini-agent",
+        "600",
+    ],
+    [
+        "readme.md",
+        "usr/share/doc/mini-agent/README",
+        "644",
+    ],
+]
+
+[package.metadata.deb.systemd-units]
+unit-scripts = "assets/systemd/"
+enable = false
+start = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
