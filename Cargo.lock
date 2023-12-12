@@ -661,6 +661,8 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "mini-agent-core",
+ "mini-agent-sink-console",
+ "mini-agent-sink-datadog",
  "mini-agent-sink-prelude",
  "mini-agent-source-prelude",
  "mini-agent-source-sysinfo",
@@ -674,6 +676,27 @@ dependencies = [
 [[package]]
 name = "mini-agent-core"
 version = "0.1.0"
+
+[[package]]
+name = "mini-agent-sink-console"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "mini-agent-sink-prelude",
+ "serde",
+ "tokio",
+]
+
+[[package]]
+name = "mini-agent-sink-datadog"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "mini-agent-sink-prelude",
+ "reqwest",
+ "serde",
+ "tokio",
+]
 
 [[package]]
 name = "mini-agent-sink-prelude"

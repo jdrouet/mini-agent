@@ -39,7 +39,7 @@ impl Config {
         let mut targets = HashMap::with_capacity(sinks.len());
 
         for (key, value) in sinks.into_iter() {
-            use crate::sink::prelude::SinkConfig;
+            use mini_agent_sink_prelude::prelude::SinkConfig;
 
             let (runner, sender) = value.build();
             let name = format!("sinks.{key}");

@@ -2,7 +2,7 @@ use mini_agent_core::event::{Event, Metric};
 use mini_agent_sink_prelude::{Executor, SinkBatch};
 use tokio::sync::mpsc;
 
-use super::prelude::{SinkConfig, BUFFER_SIZE};
+pub const BUFFER_SIZE: usize = 100;
 
 #[derive(Debug, serde::Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -26,8 +26,10 @@ pub struct DatadogConfig {
     token: String,
 }
 
-impl SinkConfig for DatadogConfig {
-    fn build(self) -> (super::Sink, mpsc::Sender<mini_agent_core::event::Event>) {
+impl mini_agent_sink_prelude::prelude::SinkConfig for DatadogConfig {
+    type Output = Datadog;
+
+    fn build(self) -> (Self::Output, mpsc::Sender<mini_agent_core::event::Event>) {
         let (sender, receiver) = mpsc::channel(BUFFER_SIZE);
 
         use reqwest::header;
@@ -46,7 +48,7 @@ impl SinkConfig for DatadogConfig {
         );
 
         (
-            super::Sink::Datadog(SinkBatch {
+            SinkBatch {
                 receiver,
                 batch_size: 10,
                 executor: DatadogExecutor {
@@ -56,7 +58,7 @@ impl SinkConfig for DatadogConfig {
                         .build()
                         .unwrap(),
                 },
-            }),
+            },
             sender,
         )
     }

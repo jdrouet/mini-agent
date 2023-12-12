@@ -2,9 +2,13 @@
 members = [
     "./mini-agent",
     "./mini-agent-core",
-    "./mini-agent-sink-prelude",
+    # source
     "./mini-agent-source-prelude",
     "./mini-agent-source-sysinfo",
     "./mini-agent-source-timer",
+    # sink
+    "./mini-agent-sink-prelude",
+    "./mini-agent-sink-console",
+    "./mini-agent-sink-datadog",
 ]
 resolver = "2"

@@ -52,6 +52,8 @@ start = false
 [dependencies]
 mini-agent-core = { version = "*", path = "../mini-agent-core" }
 mini-agent-sink-prelude = { version = "*", path = "../mini-agent-sink-prelude" }
+mini-agent-sink-console = { version = "*", path = "../mini-agent-sink-console" }
+mini-agent-sink-datadog = { version = "*", path = "../mini-agent-sink-datadog" }
 mini-agent-source-prelude = { version = "*", path = "../mini-agent-source-prelude" }
 mini-agent-source-sysinfo = { version = "*", path = "../mini-agent-source-sysinfo" }
 mini-agent-source-timer = { version = "*", path = "../mini-agent-source-timer" }

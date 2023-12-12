@@ -4,6 +4,8 @@ use mini_agent_core::event::Event;
 use mini_agent_core::prelude::Component;
 use tokio::sync::mpsc;
 
+pub mod prelude;
+
 pub const BUFFER_SIZE: usize = 100;
 
 pub trait Executor {
@@ -25,3 +27,5 @@ impl<E: Executor> Component for SinkBatch<E> {
         }
     }
 }
+
+impl<E: Executor> crate::prelude::Sink for SinkBatch<E> {}

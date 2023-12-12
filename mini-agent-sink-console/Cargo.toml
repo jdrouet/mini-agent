@@ -1,0 +1,13 @@
+[package]
+name = "mini-agent-sink-console"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+mini-agent-core = { version = "*", path = "../mini-agent-core" }
+mini-agent-sink-prelude = { version = "*", path = "../mini-agent-sink-prelude" }
+
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.0", default-features = false }

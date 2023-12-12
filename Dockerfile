@@ -12,6 +12,10 @@ RUN cargo init --lib --name mini-agent-core mini-agent-core
 COPY mini-agent-core/Cargo.toml /code/mini-agent-core/Cargo.toml
 RUN cargo init --lib --name mini-agent-sink-prelude mini-agent-sink-prelude
 COPY mini-agent-sink-prelude/Cargo.toml /code/mini-agent-sink-prelude/Cargo.toml
+RUN cargo init --lib --name mini-agent-sink-console mini-agent-sink-console
+COPY mini-agent-sink-console/Cargo.toml /code/mini-agent-sink-console/Cargo.toml
+RUN cargo init --lib --name mini-agent-sink-datadog mini-agent-sink-datadog
+COPY mini-agent-sink-datadog/Cargo.toml /code/mini-agent-sink-datadog/Cargo.toml
 RUN cargo init --lib --name mini-agent-source-prelude mini-agent-source-prelude
 COPY mini-agent-source-prelude/Cargo.toml /code/mini-agent-source-prelude/Cargo.toml
 RUN cargo init --lib --name mini-agent-source-sysinfo mini-agent-source-sysinfo
@@ -42,6 +46,10 @@ COPY mini-agent-core/Cargo.toml /code/mini-agent-core/Cargo.toml
 COPY mini-agent-core/src /code/mini-agent-core/src
 COPY mini-agent-sink-prelude/Cargo.toml /code/mini-agent-sink-prelude/Cargo.toml
 COPY mini-agent-sink-prelude/src /code/mini-agent-sink-prelude/src
+COPY mini-agent-sink-console/Cargo.toml /code/mini-agent-sink-console/Cargo.toml
+COPY mini-agent-sink-console/src /code/mini-agent-sink-console/src
+COPY mini-agent-sink-datadog/Cargo.toml /code/mini-agent-sink-datadog/Cargo.toml
+COPY mini-agent-sink-datadog/src /code/mini-agent-sink-datadog/src
 COPY mini-agent-source-prelude/Cargo.toml /code/mini-agent-source-prelude/Cargo.toml
 COPY mini-agent-source-prelude/src /code/mini-agent-source-prelude/src
 COPY mini-agent-source-sysinfo/Cargo.toml /code/mini-agent-source-sysinfo/Cargo.toml
@@ -85,6 +93,12 @@ COPY mini-agent-core/src /code/mini-agent-core/src
 
 COPY mini-agent-sink-prelude/Cargo.toml /code/mini-agent-sink-prelude/Cargo.toml
 COPY mini-agent-sink-prelude/src /code/mini-agent-sink-prelude/src
+
+COPY mini-agent-sink-console/Cargo.toml /code/mini-agent-sink-console/Cargo.toml
+COPY mini-agent-sink-console/src /code/mini-agent-sink-console/src
+
+COPY mini-agent-sink-datadog/Cargo.toml /code/mini-agent-sink-datadog/Cargo.toml
+COPY mini-agent-sink-datadog/src /code/mini-agent-sink-datadog/src
 
 COPY mini-agent-source-prelude/Cargo.toml /code/mini-agent-source-prelude/Cargo.toml
 COPY mini-agent-source-prelude/src /code/mini-agent-source-prelude/src
