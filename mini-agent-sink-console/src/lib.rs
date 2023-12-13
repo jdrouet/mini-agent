@@ -1,4 +1,5 @@
 use mini_agent_core::event::Event;
+use mini_agent_sink_prelude::single::{Executor, SinkSingle};
 use tokio::sync::mpsc;
 
 pub const BUFFER_SIZE: usize = 100;
@@ -12,20 +13,22 @@ impl mini_agent_sink_prelude::prelude::SinkConfig for ConsoleConfig {
     fn build(self) -> (Self::Output, mpsc::Sender<mini_agent_core::event::Event>) {
         let (sender, receiver) = mpsc::channel(BUFFER_SIZE);
 
-        (Console { receiver }, sender)
+        (
+            Console {
+                receiver,
+                executor: ConsoleExecutor,
+            },
+            sender,
+        )
     }
 }
 
-pub struct Console {
-    receiver: mpsc::Receiver<Event>,
-}
+pub type Console = SinkSingle<ConsoleExecutor>;
 
-impl mini_agent_core::prelude::Component for Console {
-    async fn run(mut self) {
-        while let Some(received) = self.receiver.recv().await {
-            println!("event: {received:?}");
-        }
+pub struct ConsoleExecutor;
+
+impl Executor for ConsoleExecutor {
+    async fn execute(&mut self, input: Event) {
+        println!("event: {input:?}");
     }
 }
-
-impl mini_agent_sink_prelude::prelude::Sink for Console {}
