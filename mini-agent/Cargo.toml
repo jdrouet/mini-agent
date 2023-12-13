@@ -55,6 +55,7 @@ mini-agent-sink-prelude = { version = "*", path = "../mini-agent-sink-prelude" }
 mini-agent-sink-console = { version = "*", path = "../mini-agent-sink-console" }
 mini-agent-sink-datadog = { version = "*", path = "../mini-agent-sink-datadog" }
 mini-agent-source-prelude = { version = "*", path = "../mini-agent-source-prelude" }
+mini-agent-source-http-server = { version = "*", path = "../mini-agent-source-http-server" }
 mini-agent-source-sysinfo = { version = "*", path = "../mini-agent-source-sysinfo" }
 mini-agent-source-timer = { version = "*", path = "../mini-agent-source-timer" }
 

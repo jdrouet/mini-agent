@@ -14,7 +14,7 @@ impl From<Metric> for Event {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, serde::Deserialize, serde::Serialize)]
 pub struct Metric {
     pub timestamp: Timestamp,
     pub name: String,

@@ -9,6 +9,6 @@ members = [
     # sink
     "./mini-agent-sink-prelude",
     "./mini-agent-sink-console",
-    "./mini-agent-sink-datadog",
+    "./mini-agent-sink-datadog", "mini-agent-source-http-server",
 ]
 resolver = "2"
