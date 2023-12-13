@@ -905,6 +905,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "mini-agent-transform-prelude"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "serde",
+ "tokio",
+]
+
+[[package]]
 name = "miniz_oxide"
 version = "0.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
