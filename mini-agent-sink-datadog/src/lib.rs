@@ -1,5 +1,5 @@
 use mini_agent_core::event::{Event, Metric};
-use mini_agent_sink_prelude::{Executor, SinkBatch};
+use mini_agent_sink_prelude::batch::{Executor, SinkBatch};
 use tokio::sync::mpsc;
 
 pub const BUFFER_SIZE: usize = 100;
