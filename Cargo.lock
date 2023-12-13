@@ -830,6 +830,8 @@ dependencies = [
  "mini-agent-source-random-logs",
  "mini-agent-source-random-metrics",
  "mini-agent-source-sysinfo",
+ "mini-agent-transform-filter",
+ "mini-agent-transform-prelude",
  "serde",
  "tokio",
  "toml",
@@ -923,6 +925,16 @@ dependencies = [
  "mini-agent-source-prelude",
  "serde",
  "sysinfo",
+ "tokio",
+]
+
+[[package]]
+name = "mini-agent-transform-filter"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "mini-agent-transform-prelude",
+ "serde",
  "tokio",
 ]
 

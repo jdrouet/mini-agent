@@ -59,6 +59,8 @@ mini-agent-source-http-server = { version = "*", path = "../mini-agent-source-ht
 mini-agent-source-random-logs = { version = "*", path = "../mini-agent-source-random-logs" }
 mini-agent-source-random-metrics = { version = "*", path = "../mini-agent-source-random-metrics" }
 mini-agent-source-sysinfo = { version = "*", path = "../mini-agent-source-sysinfo" }
+mini-agent-transform-prelude = { version = "*", path = "../mini-agent-transform-prelude" }
+mini-agent-transform-filter = { version = "*", path = "../mini-agent-transform-filter" }
 
 clap = { version = "4.4", features = ["derive"] }
 serde = { version = "1.0", features = ["derive"] }

@@ -1,6 +1,7 @@
 pub(crate) mod config;
 pub(crate) mod sink;
 pub(crate) mod source;
+pub(crate) mod transform;
 
 use std::path::PathBuf;
 

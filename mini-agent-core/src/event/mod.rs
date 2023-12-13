@@ -10,6 +10,16 @@ pub enum Event {
     Metric(EventMetric),
 }
 
+impl Event {
+    pub fn is_log(&self) -> bool {
+        matches!(self, Event::Log(_))
+    }
+
+    pub fn is_metric(&self) -> bool {
+        matches!(self, Event::Metric(_))
+    }
+}
+
 impl From<EventLog> for Event {
     fn from(value: EventLog) -> Self {
         Self::Log(value)

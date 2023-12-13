@@ -14,5 +14,6 @@ members = [
     "./mini-agent-sink-datadog",
     # transform
     "./mini-agent-transform-prelude",
+    "./mini-agent-transform-filter",
 ]
 resolver = "2"
