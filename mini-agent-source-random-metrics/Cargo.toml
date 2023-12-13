@@ -1,5 +1,5 @@
 [package]
-name = "mini-agent-source-timer"
+name = "mini-agent-source-random-metrics"
 version = "0.1.0"
 edition = "2021"
 

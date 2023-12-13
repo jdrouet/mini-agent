@@ -4,11 +4,15 @@ members = [
     "./mini-agent-core",
     # source
     "./mini-agent-source-prelude",
+    "./mini-agent-source-http-server",
+    "./mini-agent-source-random-logs",
+    "./mini-agent-source-random-metrics",
     "./mini-agent-source-sysinfo",
-    "./mini-agent-source-timer",
     # sink
     "./mini-agent-sink-prelude",
     "./mini-agent-sink-console",
-    "./mini-agent-sink-datadog", "mini-agent-source-http-server", "mini-agent-transform-prelude", "mini-agent-source-random-logs",
+    "./mini-agent-sink-datadog",
+    # transform
+    "./mini-agent-transform-prelude",
 ]
 resolver = "2"

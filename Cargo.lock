@@ -828,8 +828,8 @@ dependencies = [
  "mini-agent-source-http-server",
  "mini-agent-source-prelude",
  "mini-agent-source-random-logs",
+ "mini-agent-source-random-metrics",
  "mini-agent-source-sysinfo",
- "mini-agent-source-timer",
  "reqwest",
  "serde",
  "tokio",
@@ -906,6 +906,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mini-agent-source-random-metrics"
+version = "0.1.0"
+dependencies = [
+ "mini-agent-core",
+ "mini-agent-source-prelude",
+ "serde",
+ "tokio",
+]
+
+[[package]]
 name = "mini-agent-source-sysinfo"
 version = "0.1.0"
 dependencies = [
@@ -914,16 +924,6 @@ dependencies = [
  "mini-agent-source-prelude",
  "serde",
  "sysinfo",
- "tokio",
-]
-
-[[package]]
-name = "mini-agent-source-timer"
-version = "0.1.0"
-dependencies = [
- "mini-agent-core",
- "mini-agent-source-prelude",
- "serde",
  "tokio",
 ]
 
