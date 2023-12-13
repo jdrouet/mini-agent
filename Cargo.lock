@@ -830,7 +830,6 @@ dependencies = [
  "mini-agent-source-random-logs",
  "mini-agent-source-random-metrics",
  "mini-agent-source-sysinfo",
- "reqwest",
  "serde",
  "tokio",
  "toml",
