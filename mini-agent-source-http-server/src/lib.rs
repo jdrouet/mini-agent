@@ -1,6 +1,6 @@
 use axum::http::StatusCode;
 use axum::{Extension, Json};
-use mini_agent_core::event::{Event, Metric};
+use mini_agent_core::event::{Event, EventMetric};
 use mini_agent_core::prelude::Component;
 use mini_agent_source_prelude::prelude::{Source, SourceConfig};
 use tokio::sync::mpsc;
@@ -23,7 +23,7 @@ impl SourceConfig for HttpServerConfig {
 
 async fn handle_metric(
     Extension(sender): Extension<mpsc::Sender<Event>>,
-    Json(payload): Json<Metric>,
+    Json(payload): Json<EventMetric>,
 ) -> StatusCode {
     match sender.send(Event::Metric(payload)).await {
         Ok(_) => StatusCode::NO_CONTENT,

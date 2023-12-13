@@ -1,5 +1,5 @@
 use lipsum::lipsum_words;
-use mini_agent_core::event::{Event, Log};
+use mini_agent_core::event::{Event, EventLog};
 use mini_agent_source_prelude::prelude::SourceConfig;
 use mini_agent_source_prelude::timer;
 use tokio::sync::mpsc;
@@ -27,7 +27,7 @@ pub struct RandomLogsExecutor;
 
 impl timer::Executor for RandomLogsExecutor {
     async fn execute(&mut self, output: mpsc::Sender<Event>) {
-        let log = Log::now().with_message(lipsum_words(5));
+        let log = EventLog::now().with_message(lipsum_words(5));
         if let Err(err) = output.send(log.into()).await {
             eprintln!("unable to send event: {err:?}");
         }

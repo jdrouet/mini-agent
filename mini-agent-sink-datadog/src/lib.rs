@@ -1,4 +1,4 @@
-use mini_agent_core::event::{Event, Log, Metric};
+use mini_agent_core::event::{Event, EventLog, EventMetric};
 use mini_agent_sink_prelude::batch::{Executor, SinkBatch};
 use tokio::sync::mpsc;
 
@@ -94,8 +94,8 @@ pub struct DatadogMetricPayload {
     series: Vec<DatadogMetricSerie>,
 }
 
-impl From<Metric> for DatadogMetricSerie {
-    fn from(value: Metric) -> Self {
+impl From<EventMetric> for DatadogMetricSerie {
+    fn from(value: EventMetric) -> Self {
         let tags = value
             .tags
             .into_iter()
@@ -125,7 +125,7 @@ pub struct DatadogExecutor {
 }
 
 impl DatadogExecutor {
-    async fn push_logs(&self, logs: Vec<Log>) {
+    async fn push_logs(&self, logs: Vec<EventLog>) {
         match self
             .client
             .post(self.region.logs_url())
@@ -141,7 +141,7 @@ impl DatadogExecutor {
         }
     }
 
-    async fn push_metrics(&self, metrics: Vec<Metric>) {
+    async fn push_metrics(&self, metrics: Vec<EventMetric>) {
         let payload = DatadogMetricPayload {
             series: metrics.into_iter().map(DatadogMetricSerie::from).collect(),
         };

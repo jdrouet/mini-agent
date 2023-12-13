@@ -4,14 +4,14 @@ use std::collections::BTreeMap;
 use crate::time::{now, Timestamp};
 
 #[derive(Clone, Debug, serde::Deserialize, serde::Serialize)]
-pub struct Metric {
+pub struct EventMetric {
     pub timestamp: Timestamp,
     pub name: String,
     pub tags: BTreeMap<Cow<'static, str>, Cow<'static, str>>,
     pub value: f64,
 }
 
-impl Metric {
+impl EventMetric {
     pub fn now<N: Into<String>>(name: N, value: f64) -> Self {
         Self {
             timestamp: now(),

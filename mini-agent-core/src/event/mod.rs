@@ -1,23 +1,23 @@
 mod log;
 mod metric;
 
-pub use log::Log;
-pub use metric::Metric;
+pub use log::EventLog;
+pub use metric::EventMetric;
 
 #[derive(Clone, Debug)]
 pub enum Event {
-    Log(Log),
-    Metric(Metric),
+    Log(EventLog),
+    Metric(EventMetric),
 }
 
-impl From<Log> for Event {
-    fn from(value: Log) -> Self {
+impl From<EventLog> for Event {
+    fn from(value: EventLog) -> Self {
         Self::Log(value)
     }
 }
 
-impl From<Metric> for Event {
-    fn from(value: Metric) -> Self {
+impl From<EventMetric> for Event {
+    fn from(value: EventMetric) -> Self {
         Self::Metric(value)
     }
 }

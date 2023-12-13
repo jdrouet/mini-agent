@@ -1,4 +1,4 @@
-use mini_agent_core::event::{Event, Metric};
+use mini_agent_core::event::{Event, EventMetric};
 use mini_agent_source_prelude::prelude::SourceConfig;
 use mini_agent_source_prelude::timer;
 use tokio::sync::mpsc;
@@ -27,7 +27,7 @@ pub struct TimerExecutor;
 impl timer::Executor for TimerExecutor {
     async fn execute(&mut self, output: mpsc::Sender<Event>) {
         if let Err(err) = output
-            .send(Event::Metric(Metric::now("instant", 0.0)))
+            .send(Event::Metric(EventMetric::now("instant", 0.0)))
             .await
         {
             eprintln!("unable to send event: {err:?}");

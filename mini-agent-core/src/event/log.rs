@@ -3,12 +3,12 @@ use std::time::SystemTime;
 use crate::time::{now, Timestamp};
 
 #[derive(Clone, Default, Debug, serde::Deserialize, serde::Serialize)]
-pub struct Log {
+pub struct EventLog {
     #[serde(flatten)]
     pub inner: serde_json::value::Map<String, serde_json::value::Value>,
 }
 
-impl Log {
+impl EventLog {
     pub fn now() -> Self {
         Self::default().with_timestamp(now())
     }

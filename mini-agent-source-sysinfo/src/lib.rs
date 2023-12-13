@@ -1,4 +1,4 @@
-use mini_agent_core::event::{Event, Metric};
+use mini_agent_core::event::{Event, EventMetric};
 use mini_agent_source_prelude::timer;
 use mini_agent_source_prelude::timer::Executor;
 use sysinfo::{Pid, Process, SystemExt};
@@ -38,7 +38,7 @@ pub struct SysinfoExecutor {
 }
 
 impl SysinfoExecutor {
-    async fn push(&self, metric: Metric, output: &mpsc::Sender<Event>) {
+    async fn push(&self, metric: EventMetric, output: &mpsc::Sender<Event>) {
         let event = metric
             .with_optional_tag("host", self.system.host_name())
             .into();
@@ -53,7 +53,7 @@ impl SysinfoExecutor {
         for comp in self.system.components() {
             let name = comp.label().to_owned();
             self.push(
-                Metric::now("system.component.temperature", comp.temperature() as f64)
+                EventMetric::now("system.component.temperature", comp.temperature() as f64)
                     .with_tag("name", name.clone()),
                 output,
             )
@@ -65,19 +65,19 @@ impl SysinfoExecutor {
         use sysinfo::CpuExt;
 
         self.push(
-            Metric::now("system.cpu.count", self.system.cpus().len() as f64),
+            EventMetric::now("system.cpu.count", self.system.cpus().len() as f64),
             output,
         )
         .await;
         for cpu in self.system.cpus() {
             self.push(
-                Metric::now("system.cpu.usage", cpu.cpu_usage() as f64)
+                EventMetric::now("system.cpu.usage", cpu.cpu_usage() as f64)
                     .with_tag("name", cpu.name().to_string()),
                 output,
             )
             .await;
             self.push(
-                Metric::now("system.cpu.frequency", cpu.frequency() as f64)
+                EventMetric::now("system.cpu.frequency", cpu.frequency() as f64)
                     .with_tag("name", cpu.name().to_string()),
                 output,
             )
@@ -88,19 +88,19 @@ impl SysinfoExecutor {
     async fn handle_memory(&self, output: &mpsc::Sender<Event>) {
         futures::join!(
             self.push(
-                Metric::now("system.memory.total", self.system.total_memory() as f64),
+                EventMetric::now("system.memory.total", self.system.total_memory() as f64),
                 output
             ),
             self.push(
-                Metric::now("system.memory.used", self.system.used_memory() as f64),
+                EventMetric::now("system.memory.used", self.system.used_memory() as f64),
                 output
             ),
             self.push(
-                Metric::now("system.swap.total", self.system.total_swap() as f64),
+                EventMetric::now("system.swap.total", self.system.total_swap() as f64),
                 output
             ),
             self.push(
-                Metric::now("system.swap.used", self.system.used_swap() as f64),
+                EventMetric::now("system.swap.used", self.system.used_swap() as f64),
                 output
             ),
         );
@@ -118,16 +118,16 @@ impl SysinfoExecutor {
 
         futures::join!(
             self.push(
-                Metric::now("process.memory", process.memory() as f64).with_tags(tags.clone()),
+                EventMetric::now("process.memory", process.memory() as f64).with_tags(tags.clone()),
                 output
             ),
             self.push(
-                Metric::now("process.virtual_memory", process.virtual_memory() as f64)
+                EventMetric::now("process.virtual_memory", process.virtual_memory() as f64)
                     .with_tags(tags.clone()),
                 output
             ),
             self.push(
-                Metric::now("process.cpu_usage", process.cpu_usage() as f64)
+                EventMetric::now("process.cpu_usage", process.cpu_usage() as f64)
                     .with_tags(tags.clone()),
                 output
             ),
