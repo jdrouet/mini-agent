@@ -749,6 +749,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0717cef1bc8b636c6e1c1bbdefc09e6322da8a9321966e8928ef80d20f7f770f"
 
 [[package]]
+name = "lipsum"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9c5e9ef2d2ad6fe67a59ace27c203c8d3a71d195532ee82e3bbe0d5f9a9ca541"
+dependencies = [
+ "rand",
+ "rand_chacha",
+]
+
+[[package]]
 name = "lock_api"
 version = "0.4.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -817,6 +827,7 @@ dependencies = [
  "mini-agent-sink-prelude",
  "mini-agent-source-http-server",
  "mini-agent-source-prelude",
+ "mini-agent-source-random-logs",
  "mini-agent-source-sysinfo",
  "mini-agent-source-timer",
  "reqwest",
@@ -830,6 +841,7 @@ name = "mini-agent-core"
 version = "0.1.0"
 dependencies = [
  "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -878,6 +890,17 @@ name = "mini-agent-source-prelude"
 version = "0.1.0"
 dependencies = [
  "mini-agent-core",
+ "serde",
+ "tokio",
+]
+
+[[package]]
+name = "mini-agent-source-random-logs"
+version = "0.1.0"
+dependencies = [
+ "lipsum",
+ "mini-agent-core",
+ "mini-agent-source-prelude",
  "serde",
  "tokio",
 ]
@@ -1275,6 +1298,7 @@ version = "1.0.108"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d1c7e3eac408d115102c4c24ad393e0821bb3a5df4d506a80f85f7a742a526b"
 dependencies = [
+ "indexmap",
  "itoa",
  "ryu",
  "serde",
