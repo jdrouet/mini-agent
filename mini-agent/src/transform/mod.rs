@@ -6,6 +6,10 @@ pub enum Transform {
 }
 
 impl mini_agent_core::prelude::Component for Transform {
+    fn component_kind(&self) -> mini_agent_core::prelude::ComponentKind {
+        mini_agent_core::prelude::ComponentKind::Transform
+    }
+
     async fn run(self) {
         match self {
             Self::Filter(inner) => inner.run().await,

@@ -18,6 +18,10 @@ struct Args {
 
 #[tokio::main]
 async fn main() {
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::TRACE)
+        .init();
+
     let args = Args::parse();
 
     let config = crate::config::Config::from_file(&args.config);

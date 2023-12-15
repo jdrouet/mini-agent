@@ -1,7 +1,7 @@
 use axum::http::StatusCode;
 use axum::{Extension, Json};
 use mini_agent_core::event::{Event, EventLog, EventMetric};
-use mini_agent_core::prelude::Component;
+use mini_agent_core::prelude::{Component, ComponentKind};
 use mini_agent_source_prelude::prelude::{Source, SourceConfig};
 use tokio::sync::mpsc;
 
@@ -47,7 +47,12 @@ pub struct HttpServer {
 }
 
 impl Component for HttpServer {
+    fn component_kind(&self) -> ComponentKind {
+        ComponentKind::Source
+    }
+
     async fn run(self) {
+        tracing::info!("starting");
         use axum::routing::post;
 
         let app = axum::Router::new()

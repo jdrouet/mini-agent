@@ -12,3 +12,4 @@ mini-agent-source-prelude = { version = "*", path = "../mini-agent-source-prelud
 axum = { version = "0.7" }
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1.0", default-features = false }
+tracing = { version = "0.1" }

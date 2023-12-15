@@ -1,7 +1,7 @@
 #![allow(async_fn_in_trait)]
 
 use mini_agent_core::event::Event;
-use mini_agent_core::prelude::Component;
+use mini_agent_core::prelude::{Component, ComponentKind};
 use tokio::sync::mpsc;
 
 use crate::prelude::Source;
@@ -19,7 +19,12 @@ pub struct Timer<E> {
 impl<E> Timer<E> {}
 
 impl<E: Executor> Component for Timer<E> {
+    fn component_kind(&self) -> ComponentKind {
+        ComponentKind::Source
+    }
+
     async fn run(mut self) {
+        tracing::info!("starting");
         loop {
             let _ = self.interval.tick().await;
             self.executor.execute(self.output.clone()).await;

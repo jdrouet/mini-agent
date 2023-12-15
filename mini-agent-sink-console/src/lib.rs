@@ -29,6 +29,6 @@ pub struct ConsoleExecutor;
 
 impl Executor for ConsoleExecutor {
     async fn execute(&mut self, input: Event) {
-        println!("event: {input:?}");
+        tracing::debug!("event: {input:?}");
     }
 }

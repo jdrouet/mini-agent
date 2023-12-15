@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::path::Path;
 
 use tokio::task::JoinHandle;
+use tracing::Instrument;
 
 use crate::source::OuterSourceConfig;
 use crate::transform::OuterTransformConfig;
@@ -13,6 +14,14 @@ pub enum Component {
 }
 
 impl mini_agent_core::prelude::Component for Component {
+    fn component_kind(&self) -> mini_agent_core::prelude::ComponentKind {
+        match self {
+            Self::Source(inner) => inner.component_kind(),
+            Self::Transform(inner) => inner.component_kind(),
+            Self::Sink(inner) => inner.component_kind(),
+        }
+    }
+
     async fn run(self) {
         match self {
             Self::Source(inner) => inner.run().await,
@@ -50,9 +59,8 @@ impl Config {
             use mini_agent_sink_prelude::prelude::SinkConfig;
 
             let (runner, sender) = value.build();
-            let name = format!("sinks.{key}");
-            targets.insert(key, sender);
-            components.push((name, Component::Sink(runner)));
+            targets.insert(key.clone(), sender);
+            components.push((key, Component::Sink(runner)));
         }
 
         for (key, value) in transforms.into_iter() {
@@ -60,9 +68,8 @@ impl Config {
 
             let sender = targets.get(&value.target).unwrap().clone();
             let (runner, sender) = value.inner.build(sender);
-            let name = format!("transforms.{key}");
-            targets.insert(key, sender);
-            components.push((name, Component::Transform(runner)));
+            targets.insert(key.clone(), sender);
+            components.push((key, Component::Transform(runner)));
         }
 
         for (key, value) in sources.into_iter() {
@@ -70,8 +77,7 @@ impl Config {
 
             let sender = targets.get(&value.target).unwrap().clone();
             let runner = value.inner.build(sender);
-            let name = format!("sources.{key}");
-            components.push((name, Component::Source(runner)));
+            components.push((key, Component::Source(runner)));
         }
 
         components
@@ -82,7 +88,13 @@ impl Config {
 
         self.components()
             .into_iter()
-            .map(|(name, component)| (name, tokio::spawn(async { component.run().await })))
+            .map(|(name, component)| {
+                let span = tracing::info_span!("component", kind = %component.component_kind(), name = name);
+                (
+                    name,
+                    tokio::spawn(async { component.run().instrument(span).await }),
+                )
+            })
             .collect::<HashMap<_, _>>()
     }
 }

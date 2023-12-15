@@ -9,6 +9,10 @@ pub enum Source {
 }
 
 impl mini_agent_core::prelude::Component for Source {
+    fn component_kind(&self) -> mini_agent_core::prelude::ComponentKind {
+        mini_agent_core::prelude::ComponentKind::Source
+    }
+
     async fn run(self) {
         match self {
             Self::HttpServer(inner) => inner.run().await,

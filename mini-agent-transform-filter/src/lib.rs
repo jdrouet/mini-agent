@@ -1,5 +1,5 @@
 use mini_agent_core::event::Event;
-use mini_agent_core::prelude::Component;
+use mini_agent_core::prelude::{Component, ComponentKind};
 use mini_agent_transform_prelude::prelude::{Transform, TransformConfig};
 use tokio::sync::mpsc;
 
@@ -64,11 +64,16 @@ pub struct Filter {
 }
 
 impl Component for Filter {
+    fn component_kind(&self) -> ComponentKind {
+        ComponentKind::Transform
+    }
+
     async fn run(mut self) {
+        tracing::info!("starting");
         while let Some(event) = self.input.recv().await {
             if self.method.matches(&event) {
                 if let Err(err) = self.output.send(event).await {
-                    eprint!("couldn't transform event {err:?}");
+                    tracing::error!("couldn't transform event {err:?}");
                 }
             }
         }

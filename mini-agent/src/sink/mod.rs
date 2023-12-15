@@ -4,6 +4,10 @@ pub(crate) enum Sink {
 }
 
 impl mini_agent_core::prelude::Component for Sink {
+    fn component_kind(&self) -> mini_agent_core::prelude::ComponentKind {
+        mini_agent_core::prelude::ComponentKind::Sink
+    }
+
     async fn run(self) {
         match self {
             Self::Console(inner) => inner.run().await,
